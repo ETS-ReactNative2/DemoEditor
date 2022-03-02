@@ -12,13 +12,13 @@ import styled from 'styled-components';
 import { Switch, Route } from 'react-router-dom';
 
 import HomePage from 'containers/HomePage/Loadable';
-import FeaturePage from 'containers/FeaturePage/Loadable';
+// import FeaturePage from 'containers/FeaturePage/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 import Header from 'components/Header';
-import Footer from 'components/Footer';
+// import Footer from 'components/Footer';
 
-import GlobalStyle from '../../global-styles';
-
+// import GlobalStyle from '../../global-styles';
+import DemoEditor from '../DemoEditor';
 const AppWrapper = styled.div`
   max-width: calc(768px + 16px * 2);
   margin: 0 auto;
@@ -40,11 +40,12 @@ export default function App() {
       <Header />
       <Switch>
         <Route exact path="/" component={HomePage} />
-        <Route path="/features" component={FeaturePage} />
+        <Route path="/features" component={DemoEditor} />
         <Route path="" component={NotFoundPage} />
+        <Route path="/editor" component={DemoEditor} />
       </Switch>
-      <Footer />
-      <GlobalStyle />
+      {/* <Footer />
+      <GlobalStyle /> */}
     </AppWrapper>
   );
 }
