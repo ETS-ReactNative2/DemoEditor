@@ -79,7 +79,44 @@ export default function FormCropImage(props) {
     handleDefault,
   } = props;
   const classes = useStyles();
-
+  const marks = [
+    {
+      value: 0,
+      label: '0°',
+    },
+    {
+      value: 45,
+      label: '45°',
+    },
+    {
+      value: 90,
+      label: '37°',
+    },
+    {
+      value: 135,
+      label: '135°',
+    },
+    {
+      value: 180,
+      label: '180°',
+    },
+    {
+      value: 225,
+      label: '225°',
+    },
+    {
+      value: 270,
+      label: '270°',
+    },
+    {
+      value: 315,
+      label: '315°',
+    },
+    {
+      value: 360,
+      label: '360°',
+    },
+  ];
   return (
     <>
       <Dialog
@@ -111,8 +148,7 @@ export default function FormCropImage(props) {
               variant="overline"
               classes={{ root: classes.sliderLabel }}
             >
-              {' '}
-              Zoom{' '}
+              Zoom
             </Typography>
             <Slider
               value={zoom}
@@ -129,8 +165,7 @@ export default function FormCropImage(props) {
               variant="overline"
               classes={{ root: classes.sliderLabel }}
             >
-              {' '}
-              Rotation{' '}
+              Rotation
             </Typography>
             <Slider
               value={rotation}
@@ -139,19 +174,34 @@ export default function FormCropImage(props) {
               step={1}
               aria-labelledby="Rotation"
               className={classes.slider}
-              // onChange={(e, rotation) => setRotation(rotation)}
+              onChange={(e, valRotation) => setRotation(valRotation)}
+              // defaultValue={30}
+              // getAriaValueText={valuetext}
+              // aria-labelledby="discrete-slider"
+              valueLabelDisplay="auto"
+              // step={10}
+              marks={marks}
+              // min={10}
+              // max={110}
             />
           </div>
         </div>
         <div className={classes.buttonContainer}>
+          <Button
+            onClick={handleDefault}
+            variant="outlined"
+            color="primary"
+            className={classes.button}
+          >
+            Default
+          </Button>
           <Button
             onClick={saveImage}
             variant="contained"
             color="primary"
             className={classes.button}
           >
-            {' '}
-            Save{' '}
+            Save
           </Button>
           <Button
             onClick={handleClose}
@@ -159,17 +209,7 @@ export default function FormCropImage(props) {
             color="primary"
             className={classes.button}
           >
-            {' '}
-            Cancel{' '}
-          </Button>
-          <Button
-            onClick={handleDefault}
-            variant="contained"
-            color="primary"
-            className={classes.button}
-          >
-            {' '}
-            Default{' '}
+            Cancel
           </Button>
         </div>
       </Dialog>

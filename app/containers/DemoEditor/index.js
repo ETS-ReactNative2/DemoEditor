@@ -1,10 +1,8 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useState, useCallback } from 'react';
-// import Button from '@material-ui/core/Button';
-
-import GridList from '@material-ui/core/GridList';
-import GridListTile from '@material-ui/core/GridListTile';
+// import { GridList, GridListTile } from '@material-ui/core';
+import { ImageList, ImageListItem } from '@material-ui/core';
 import FormCropImage from './FormCropImage';
 import './styles.css';
 import useStyle from './style';
@@ -16,94 +14,18 @@ import hinh4 from './imagge/image-1.png';
 import hinh5 from './imagge/hp-remus-lupin-1.jpg';
 import hinh6 from './imagge/hp-platform-934-hogwarts-express-1.jpg';
 
-// function readFile(file) {
-//   return new Promise(resolve => {
-//     const reader = new FileReader();
-//     reader.addEventListener('load', () => resolve(reader.result), false);
-//     reader.readAsDataURL(file);
-//   });
-// }
-
 export default function DemoEditor() {
   const classes = useStyle();
 
   const [editImg, setEditImg] = useState();
-  // const [file, setFile] = useState([]);
-  // const onFileChange = async e => {
-  //   // console.log('imageDataUrl1');
-
-  //   if (e.target.files && e.target.files.length > 0) {
-  //     const fileUpload = e.target.files[0];
-  //     const validImageTypes = [
-  //       'image/svg+xml',
-  //       'image/jpeg',
-  //       'image/png',
-  //       'image/webp',
-  //     ];
-  //     // console.log(
-  //     //   'imageDataUrl',
-  //     //   fileUpload,
-  //     //   validImageTypes.includes(fileUpload.type),
-  //     // );
-
-  //     if (validImageTypes.includes(fileUpload.type)) {
-  //       // console.log('fileRender', fileUpload, file);
-
-  //       const imageDataUrl = await readFile(fileUpload);
-  //       let fileRender;
-  //       console.log(file !== null);
-  //       if (file !== null) {
-  //         fileRender = [
-  //           {
-  //             src: imageDataUrl,
-  //             alt: fileUpload.name,
-  //           },
-  //           ...file,
-  //         ];
-  //         console.log('fileRender', fileRender);
-  //       } else {
-  //         fileRender = [
-  //           {
-  //             src: imageDataUrl,
-  //             alt: fileUpload.name,
-  //           },
-  //         ];
-  //       }
-  //       console.log('fileRender', fileRender);
-
-  //       setFile(fileRender);
-  //       // setImageUrl(imageDataUrl);
-  //     } else {
-  //       alert('Uploaded files must be an image (e.g. .jpeg, .png, .svg)');
-  //     }
-  //   }
-  // };
 
   const listImg = [
-    {
-      src: hinh1,
-      alt: 'naruto',
-    },
-    {
-      src: hinh2,
-      alt: 'sasuke',
-    },
-    {
-      src: hinh3,
-      alt: 'itadori',
-    },
-    {
-      src: hinh4,
-      alt: 'yonko',
-    },
-    {
-      src: hinh5,
-      alt: 'luffy',
-    },
-    {
-      src: hinh6,
-      alt: 'law',
-    },
+    { id: 1, src: hinh1, alt: 'naruto' },
+    { id: 2, src: hinh2, alt: 'sasuke' },
+    { id: 3, src: hinh3, alt: 'itadori' },
+    { id: 4, src: hinh4, alt: 'yonko' },
+    { id: 5, src: hinh5, alt: 'luffy' },
+    { id: 6, src: hinh6, alt: 'law' },
   ];
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [rotation, setRotation] = useState(0);
@@ -124,7 +46,6 @@ export default function DemoEditor() {
         croppedAreaPixels,
         rotation,
       );
-      // console.log('donee', { croppedImages });
       // setCroppedImage(croppedImages);
       const defaultValue = value;
       defaultValue.forEach(e => {
@@ -133,6 +54,7 @@ export default function DemoEditor() {
       setValue(defaultValue);
       handleClose();
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.error(e);
     }
   }, [croppedAreaPixels, rotation]);
@@ -151,10 +73,15 @@ export default function DemoEditor() {
 
   return (
     <>
-      <GridList cellHeight={200} cols={3} className={classes.gridList}>
+      <ImageList
+        // cellHeight={200}
+        cols={3}
+        rowHeight={160}
+        className={classes.gridList}
+      >
         {value.map(img => (
           // console.log(index, img, "ss");
-          <GridListTile className={classes.gridListTile}>
+          <ImageListItem className={classes.gridListTile} key={img.id}>
             <img
               className={classes.img}
               src={img.src}
@@ -164,9 +91,9 @@ export default function DemoEditor() {
                 setOpen(true);
               }}
             />
-          </GridListTile>
+          </ImageListItem>
         ))}
-      </GridList>
+      </ImageList>
       {/* <Button variant="contained" component="label">
         Upload File
         <input
