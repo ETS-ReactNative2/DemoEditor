@@ -11,13 +11,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { Switch, Route } from 'react-router-dom';
 import Box from '@material-ui/core/Box';
-import HomePage from 'containers/HomePage/Loadable';
-// import FeaturePage from 'containers/FeaturePage/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
-// import Header from 'components/Header';
-// import Footer from 'components/Footer';
 
-// import GlobalStyle from '../../global-styles';
 import DemoEditor from '../DemoEditor';
 const AppWrapper = styled.div`
   max-width: calc(768px + 16px * 2);
@@ -43,9 +38,7 @@ export default function App() {
         </a>
       </Box>
       <Switch>
-        <Route exact path="/" component={HomePage} />
-        <Route path="/features" component={DemoEditor} />
-        <Route path="/editor" component={DemoEditor} />
+        <Route exact path="/" component={DemoEditor} />
         <Route path="" component={NotFoundPage} />
       </Switch>
       {/* <Footer />
