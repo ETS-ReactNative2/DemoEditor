@@ -62,36 +62,6 @@ const useStyles = makeStyles(() =>
     },
   }),
 );
-const Output = ({ croppedAreaProp, url, CROP_AREA_ASPECT }) => {
-  const scale = 100 / croppedAreaProp.width;
-  const transform = {
-    x: `${-croppedAreaProp.x * scale}%`,
-    y: `${-croppedAreaProp.y * scale}%`,
-    scale,
-    width: 'calc(100% )',
-    height: 'auto',
-  };
-  const imageStyle = {
-    transform: `translate3d(${transform.x}, ${
-      transform.y
-    }, 0) scale3d(${1},1,1)`,
-    width: transform.width,
-    height: transform.height,
-  };
-
-  // console.log(imageStyle, 'imageStyle');
-  return (
-    <div className="output" style={{ height: `${300 / CROP_AREA_ASPECT}px` }}>
-      <img src={url} alt="" style={imageStyle} />
-    </div>
-  );
-};
-Output.propTypes = {
-  croppedAreaProp: PropTypes.any,
-  url: PropTypes.any,
-  CROP_AREA_ASPECT: PropTypes.any,
-};
-
 export default function FormCropImage(props) {
   const {
     open,
@@ -105,11 +75,8 @@ export default function FormCropImage(props) {
     onCropComplete,
     setZoom,
     saveImage,
-    aspect = 3 / 2, // Tỉ lệ khung hình
+    aspect = 3 / 3,
     handleDefault,
-    croppedAreas,
-    setCroppedAreas,
-    croppedAreaPixels,
   } = props;
   const classes = useStyles();
   const marks = [
@@ -123,7 +90,7 @@ export default function FormCropImage(props) {
     },
     {
       value: 90,
-      label: '90°',
+      label: '37°',
     },
     {
       value: 135,
@@ -150,7 +117,6 @@ export default function FormCropImage(props) {
       label: '360°',
     },
   ];
-
   return (
     <>
       <Dialog
@@ -159,7 +125,7 @@ export default function FormCropImage(props) {
         onClose={handleClose}
         TransitionComponent={Transition}
       >
-        {/* <div className={classes.cropContainer}>
+        <div className={classes.cropContainer}>
           <Cropper
             image={editImg}
             crop={crop}
@@ -174,44 +140,77 @@ export default function FormCropImage(props) {
             onRotationChange={setRotation}
             onCropComplete={onCropComplete}
             onZoomChange={setZoom}
-            onCropAreaChange={croppedArea => {
-              setCroppedAreas(croppedArea);
-            }}
-            // objectFit="horizontal-cover"
           />
-        </div> */}
-        <div className="App">
-          <div className="cropper">
-            <Cropper
-              image={editImg}
-              crop={crop}
-              rotation={rotation}
-              zoom={zoom}
-              minZoom={0.5}
-              maxZoom={3}
-              aspect={aspect}
-              zoomWithScroll={false}
-              // restrictPosition={false}
-              onCropChange={setCrop}
-              onRotationChange={setRotation}
-              onCropComplete={onCropComplete}
-              onZoomChange={setZoom}
-              onCropAreaChange={croppedArea => {
-                setCroppedAreas(croppedArea);
-              }}
+        </div>
+        <div className={classes.controls}>
+          <div className={classes.sliderContainer}>
+            <Typography
+              variant="overline"
+              classes={{ root: classes.sliderLabel }}
+            >
+              Zoom
+            </Typography>
+            <Slider
+              value={zoom}
+              min={0.5}
+              max={3}
+              step={0.1}
+              aria-labelledby="Zoom"
+              className={classes.slider}
+              onChange={(e, onZoom) => setZoom(onZoom)}
             />
           </div>
-          <div className="viewer">
-            <div>
-              {croppedAreaPixels && (
-                <Output
-                  croppedAreaProp={croppedAreaPixels}
-                  url={editImg}
-                  CROP_AREA_ASPECT={aspect}
-                />
-              )}
-            </div>
+          <div className={classes.sliderContainer}>
+            <Typography
+              variant="overline"
+              classes={{ root: classes.sliderLabel }}
+            >
+              Rotation
+            </Typography>
+            <Slider
+              value={rotation}
+              min={0}
+              max={360}
+              step={1}
+              aria-labelledby="Rotation"
+              className={classes.slider}
+              onChange={(e, valRotation) => setRotation(valRotation)}
+              // defaultValue={30}
+              // getAriaValueText={valuetext}
+              // aria-labelledby="discrete-slider"
+              valueLabelDisplay="auto"
+              // step={10}
+              marks={marks}
+              // min={10}
+              // max={110}
+            />
           </div>
+        </div>
+        <div className={classes.buttonContainer}>
+          <Button
+            onClick={handleDefault}
+            variant="outlined"
+            color="primary"
+            className={classes.button}
+          >
+            Default
+          </Button>
+          <Button
+            onClick={saveImage}
+            variant="contained"
+            color="primary"
+            className={classes.button}
+          >
+            Save
+          </Button>
+          <Button
+            onClick={handleClose}
+            variant="contained"
+            color="primary"
+            className={classes.button}
+          >
+            Cancel
+          </Button>
         </div>
       </Dialog>
     </>
@@ -232,7 +231,4 @@ FormCropImage.propTypes = {
   saveImage: PropTypes.any,
   aspect: PropTypes.any,
   handleDefault: PropTypes.any,
-  setCroppedAreas: PropTypes.any,
-  croppedAreas: PropTypes.any,
-  croppedAreaPixels: PropTypes.any,
 };

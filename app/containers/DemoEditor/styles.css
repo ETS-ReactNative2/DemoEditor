@@ -33,6 +33,5 @@ body {
   position: absolute;
   top: 0;
   left: 0;
-  transform-origin: center;
-  width: 100px;
+  transform-origin: top left;
 }
